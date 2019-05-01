@@ -10,19 +10,7 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        <h1>What is Funny?</h1>
-        <div>
-          <div className="column" id="undecided">
-            <h2>Undecided</h2>
-            <ComicList/>
-          </div>
-          <div className="column" id="funny">
-            <h2>Funny</h2>
-          </div>
-          <div className="column" id="not-funny">
-            <h2>Not Funny</h2>
-          </div>
-        </div>
+        <ComicList/>
       </div>
     );
   }

@@ -24,8 +24,14 @@ app.post('/api/loadComics', (req, res)=> {
     res.send(state.comics)
   })
 
-app.put('/api/updateComics', (req, res)=>{
+app.put('/api/updateFunnyComics', (req, res)=>{
     state.funnyComics = [...state.funnyComics, state.comics.filter(e => e.num === req.body.data)];
+    state.comics = state.comics.filter(e => e.num !== req.body.data);
+    res.send(state);
+})
+
+app.put('/api/updateNotFunnyComics', (req, res)=>{
+    state.notFunnyComics = [...state.notFunnyComics, state.comics.filter(e => e.num === req.body.data)];
     state.comics = state.comics.filter(e => e.num !== req.body.data);
     res.send(state);
 })

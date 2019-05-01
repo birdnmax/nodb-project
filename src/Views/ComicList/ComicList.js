@@ -17,7 +17,7 @@ class ComicList extends Component{
     componentDidMount(){
         const allComics =[];
         for(let i = 2001; i<= 2050; i++){
-            allComics.push(axios.post(`${baseUrl}/${i}`))
+            allComics.push(axios.get(`${baseUrl}/${i}`))
         }
         Promise.all(allComics)
             .then(res=>{
@@ -32,9 +32,8 @@ class ComicList extends Component{
             })
     }
 
-    isFunny = (num) => {
-        
-        axios.put('http://localhost:8060/api/updateComics', {data:num}).then(res =>{
+    isFunny = (num) => { 
+        axios.put('http://localhost:8060/api/updateFunnyComics', {data:num}).then(res =>{
           this.setState({
               comics: res.data.comics, 
               funnyComics: res.data.funnyComics
@@ -43,8 +42,11 @@ class ComicList extends Component{
     }
 
     isNotFunny = (num) => {
-        this.setState({
-            comics:this.state.comics.map()
+        axios.put('http://localhost:8060/api/updateNotFunnyComics', {data:num}).then(res =>{
+          this.setState({
+              comics: res.data.comics, 
+              notFunnyComics: res.data.notFunnyComics
+          }) 
         })
     }
     
@@ -59,10 +61,24 @@ class ComicList extends Component{
             return <Comic key={num} index={e.num} isFunny={this.isFunny} isNotFunny={this.isNotFunny} comic={e}/>
         })
         return (
-          <div className="ComicList">
-              {newComics}
-              {newFunnyComics}
-              {newNotFunnyComics}
+            <div>
+                <div className="header">
+                    <h1>What is Quality Comedy?</h1>
+                </div>
+                <div className="ComicList">
+                    <div className="column" id="undecided">
+                        <h2>Undecided</h2>
+                        {newComics}
+                    </div>
+                    <div className="column" id="funny">
+                        <h2>Funny</h2>
+                        {newFunnyComics}
+                    </div>
+                    <div className="column" id="not-funny">
+                        <h2>Not Funny</h2>
+                        {newNotFunnyComics}
+                    </div>
+                </div>
           </div>
           );
         }
